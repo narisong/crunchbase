@@ -8,17 +8,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     const contacts = [];
     if (companyName) {
-      const contactDetailsElements = document.getElementsByTagName('contact-details');
-      if (contactDetailsElements) {
-        for (let i = 0; i < contactDetailsElements.length; i++) {
-          const nameElement = contactDetailsElements.item(i).querySelector('span.ng-star-inserted');
-          const jobTitleElement = contactDetailsElements.item(i).querySelector('div.job-title.ng-star-inserted');
-          if (nameElement) {
-            contacts.push({
-              name: nameElement.innerHTML.trim(),
-              title: jobTitleElement.innerHTML.trim(),
-            })
-          }
+      const imageListCardElements = document.getElementsByTagName('image-list-card');
+      if (imageListCardElements) {
+        const lis = imageListCardElements[0].getElementsByTagName('li');
+        for (let i = 0; i < lis.length; i++) {
+          const name = lis[i].querySelector('div.fields').querySelector('a').innerHTML.trim();
+          const title = lis[i].querySelector('span.component--field-formatter.field-type-text_short.ng-star-inserted').innerHTML;
+          contacts.push({
+            name,
+            title,
+          })
         }
       }
     }
